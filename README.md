@@ -1,16 +1,64 @@
-# Global-CO2-Emission
-About this file
 
-This dataset provides detailed information on global fossil CO2 emissions by country from 2002-2022
+---
 
-Country: The name of the country. (String)
-ISO 3166-1 alpha-3: The three-letter code for the country. (String)
-Year: The year of the data. (Integer)
-Total: The total amount of CO2 emissions for the country in the given year. (Float)
-Coal: The amount of CO2 emissions from coal for the country in the given year. (Float)
-Oil: The amount of CO2 emissions from oil for the country in the given year. (Float)
-Gas: The amount of CO2 emissions from gas for the country in the given year. (Float)
-Cement: The amount of CO2 emissions from cement production for the country in the given year. (Float)
-Flaring: The amount of CO2 emissions from flaring operations for the country in the given year. (Float)
-Other: The amount of CO2 emissions from other sources for the country in the given year. (Float)
-Per Capita: The amount of CO2 emissions per capita for the country in the given year. (Float)
+## 📊 Part 1: Exploratory Data Analysis (EDA)
+
+Implemented in `emissions_eda.ipynb` using clean pipeline logic in `src/pipeline.py` and visualizations in `visualizations/plots.py`.
+
+### Highlights:
+
+- Cleaned and imputed missing values by country-sector mean  
+- Dropped irrelevant global/international transport data  
+- Visualized:
+  - Top emitters over time
+  - Sector-wise trends for USA, India, Afghanistan
+  - Correlation heatmaps
+  - Choropleth maps (Coal, Gas, Cement, etc.)
+  - Per capita emissions  
+- Explained key trends (e.g., rise of coal in USA, dip in 2020 from COVID-19)
+
+✅ The EDA serves as both an **analytical deep-dive** and **pipeline-ready visualization tool**.
+
+---
+
+## 🔮 Part 2: Time Series Forecasting
+
+Implemented as a clean forecasting pipeline with modular Python components and a controller notebook.
+
+### Features:
+
+- Filters **only global data** (ISO code `'WLD'`)  
+- Removes data before 1950  
+- Makes time series **stationary** using 12-year rolling average  
+- Runs **ADF stationarity test**  
+- Trains an **ARIMA(2,1,2)** model  
+- Visualizes original series vs. model predictions  
+
+### Modules (inside `src/`):
+
+- `data_loader.py`: Load and filter data  
+- `transform.py`: Stationarize series  
+- `model.py`: Train ARIMA and plot results  
+
+---
+
+## 📈 Forecasting Output
+
+The forecasting notebook plots:
+
+- Global CO₂ emissions (stationary)  
+- ARIMA model fitted predictions  
+
+✅ Model setup supports `.forecast(steps=5)` for future years (extendable)
+
+---
+
+## ▶️ How to Run
+
+1. Clone this repo  
+2. Place the dataset in `data/GCB2022v27_MtCO2_flat.csv`  
+3. Run:
+   - `emissions_eda.ipynb` for EDA  
+   - `time_series_forecasting.ipynb` for forecasting  
+
+---
